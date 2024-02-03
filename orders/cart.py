@@ -30,8 +30,9 @@ class Cart:
     def save(self):
         self.session.modified=True
     
-    def __itr__(self):
-        return self.cart.values()
+    def __iter__(self):
+        for item in self.cart.values():
+            yield item
     
     def __len__(self):
         return sum(item['quantity'] for item in self.cart.values())

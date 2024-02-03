@@ -1,7 +1,8 @@
-from rest_framework import viewsets,status
+from rest_framework import viewsets,status,generics
 from rest_framework.response import Response
 from .cart import Cart
-from .serializers import CartItemSerializer
+from .serializers import CartItemSerializer, OrderSerializer
+from .models import Order
 
 class CartViewSet(viewsets.ViewSet):
     
@@ -35,3 +36,11 @@ class CartViewSet(viewsets.ViewSet):
         else:
             Cart(request).clear()
         return Response({'Message':'Done'}, status=status.HTTP_204_NO_CONTENT)
+
+class OrderView(generics.ListCreateAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+
+class SingleOrderView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer

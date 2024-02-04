@@ -12,6 +12,8 @@ psycopg = "*"
 django-environ = "*"
 djangorestframework-simplejwt = "*"
 pillow = "*"
+celery = "*"
+flower = "*"
 
 [dev-packages]
 

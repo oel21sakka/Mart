@@ -15,6 +15,7 @@ Before you dive in, make sure you have the following requirements in place:
 - [Python](https://www.python.org/)
 - [Pipenv](https://pipenv.pypa.io/)
 - [Postgresql](https://www.postgresql.org/)
+- [RabbitMQ](https://rabbitmq.com/)
 
 Install the necessary Python packages within a virtual environment using the following command:
 
@@ -54,6 +55,7 @@ python3 manage.py migrate
 - Python
 - Django
 - Postgresql
+- RabbitMQ
 
 ## Usage
 
@@ -62,6 +64,24 @@ python3 manage.py migrate
 ```bash
 python3 manage.py makemigrations
 python3 manage.py migrate
+```
+
+- Ensure that RabbitMQ server is running:
+
+```bash
+systemctl start rabbitmq-server
+```
+
+- Run celery worker:
+
+```bash
+celery -A mart worker
+```
+
+- (Optional) Monitor Celery using Flower:
+
+```bash
+celery -A mart flower
 ```
 
 - Start by running:

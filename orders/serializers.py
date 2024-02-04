@@ -3,6 +3,7 @@ from shop.models import Product
 from shop.serializers import ProductSerializer
 from .models import Order,OrderItem
 from .cart import Cart
+from .tasks import order_created
 
 class CartItemSerializer(serializers.Serializer):
     product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all())
@@ -58,4 +59,6 @@ class OrderSerializer(serializers.ModelSerializer):
             if order_item_serilzer.is_valid():
                 order_item_serilzer.save()
         cart.clear()
+        #send email order created using celery task
+        order_created.delay(order.id)
         return order

@@ -20,6 +20,8 @@ class CartViewSet(viewsets.ViewSet):
         '''
         serializer = CartItemSerializer(data=request.data)
         if serializer.is_valid():
+            if not serializer.data['product']['available']:
+                return Response({'product':'product unavailable'}, status=status.HTTP_400_BAD_REQUEST)
             response = Cart(request).add(product = serializer.data['product'], quantity = int(serializer.data['quantity']),\
                 override_quantity = request.method!='POST')
             return Response(response, status=status.HTTP_200_OK)
